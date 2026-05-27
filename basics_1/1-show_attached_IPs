@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 # Affiche toutes les adresses IPv4 actives de la machine
 
-ip -4 addr show | grep inet | awk '{print $2}' | cut -d'/' -f1
+# Recuperer l'IP de l'interface principale (souvent eth0, eth1 ou enp)
+ip -4 addr show scope global | awk '/inet / {print $2}' | cut -d/ -f1
+
+# Recuperer l'IP de l'interface locale (localhost)
+ip -4 addr show dev lo | awk '/inet / {print $2}' | cut -d/ -f1
