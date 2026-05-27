@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Fait ecouter la machine sur le port 98 de localhost
+
+# Ecouter sur le port 98 de localhost (127.0.0.2 suite a la Task 0)
+nc -l 127.0.0.2 98
