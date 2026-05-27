@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Configure la resolution IP locale pour localhost et facebook.com
 
-# Nettoyer les anciennes configurations pour eviter les doublons
-sed -i '/localhost/d' /etc/hosts
-sed -i '/facebook.com/d' /etc/hosts
+# Forcer la modification de localhost vers 127.0.0.2 (qu'il soit sur 127.0.0.1 ou deja modifie)
+sed -i -E 's/^127\.0\.0\.[0-9]+([[:space:]]+)localhost/127.0.0.2\1localhost/g' /etc/hosts
 
-# Ajouter proprement les nouvelles configurations attendues par le checker
-echo -e "127.0.0.2 localhost\n8.8.8.8 facebook.com" >> /etc/hosts
+# Ajouter ou mettre a jour facebook.com vers 8.8.8.8 de maniere propre
+if grep -q "facebook.com" /etc/hosts; then
+    sed -i -E 's/.*facebook.com.*/8.8.8.8 facebook.com/' /etc/hosts
+else
+    echo "8.8.8.8 facebook.com" >> /etc/hosts
+fi
